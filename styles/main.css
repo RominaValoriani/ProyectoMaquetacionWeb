@@ -1,0 +1,719 @@
+/* Content-First - Mobile First */
+/* Reglas Generales */
+    @import url('https://fonts.googleapis.com/css2?family=Raleway');
+    
+    @font-face{
+        font-family: 'Star Wars';
+        src: url('../assets/fonts/death_star.otf');
+    }
+    
+    *{
+        font-family: 'Raleway', 'century gothic', sans-serif;
+        box-sizing: border-box;
+        /* EXPLICACION:
+            content-box
+            * content-width = width
+            * final-width   = width + padding + border
+            border-box
+            * final-width   = width
+            * content-width = width - padding - border
+        */
+    }
+
+    /* Margenes */
+    body, 
+    h1, 
+    h2,  
+    h3,  
+    header p, 
+    .menu{
+        margin: 0;
+    }
+    /* Rellenos */
+    .menu,
+    .unstyled,
+    .content-table ol{
+        padding: 0;
+    }
+    /* Estilos */
+    .menu,
+    .example,
+    .content-table li,
+    .unstyled{
+        list-style: none;
+    }
+    nav a,
+    footer a{
+        text-decoration: none;
+    }
+/* Navegacion */
+    nav{
+        position: sticky;
+        /* el elemento ocupa lugar dentro del flow hasta que se cumple una determinada condicion (relative con toques de absolute) */
+        top: 0;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: .5rem; /* Ancho de M en la raiz (html) */
+        background-image: linear-gradient(to right, #012, #124);
+    }
+    nav a{
+        color: #fc6;
+        line-height: 1.5;
+    }
+    .menu a.active,
+    .menu a:hover{
+        color: #fea;
+        text-shadow: 0 0 .5rem; /* -x+ -y+ blur color */
+    }
+    .menu{
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+    }
+    .menu.active{
+        max-height: 640px;
+    }
+    .btn.open::before{
+        content: '\2630';
+    }
+
+/* Cabecera */
+    h1{
+        font-family: 'Star Wars';
+        letter-spacing: .2rem;
+    }
+    #header{
+        padding: min(20%, 240px) 1rem;
+        color: #ffa;
+        font-size: min(calc(2vw + .5rem), 3rem); /* ancho de la ventana*/
+        /* EXPLICACION:
+            min(a,b): el navegador devuelve el valor mas bajo entre las 2 unidades
+            calc(a + b) el navegador realiza una operacion entre unidades (auque no sean compatibles)
+        */
+        text-align: center;
+        text-shadow: 0 0 .5rem #fc6;
+        background-image: 
+            linear-gradient( /* estilo de gradiente */
+                rgba(17, 34, 68, .5), 
+                rgba(17,17,34,.5)
+            ),
+            url('../assets/bg/tiefighter-top-right.png'),
+            url('../assets/bg/tiefighter-top-left.png'),
+            url('../assets/bg/xwing-left.png'),
+            url('../assets/bg/xwing-top-left.png'),
+            url('../assets/bg/millenium-falcon.png'),
+            url('../assets/bg/death-star.png'),
+            url('../assets/bg/space.jpg');
+        background-position: /*x y | left right top bottom center*/
+            center,
+            90% 15%,
+            bottom left,
+            40% center,
+            15% top,
+            95% bottom,
+            center 10%,
+            center;
+        background-size: /* width height | contain cover */
+            cover,
+            clamp(5rem, 30%,300px), 
+            clamp(5rem, 30%,300px),
+            clamp(5rem, 30%,300px), /* minimo, promedio maximo */
+            clamp(5rem, 30%,300px),  
+            clamp(5rem, 30%,500px), 
+            min(45%, 600px), /* muestra la imagen completa */
+            cover; /* cubre el total de la etiqueta */
+        background-repeat: no-repeat;   
+        background-attachment: 
+            fixed,
+            scroll,
+            scroll,
+            scroll,
+            scroll,
+            scroll,
+            fixed,
+            scroll;     
+    }
+    .header{        
+        padding: 1rem;
+        color: #eee;
+        background-color: #248;
+    }
+    header{
+        color: #248;
+        border-bottom: 2px solid;
+    }
+    section > .header{
+        position: sticky;
+        top: 4rem;
+    }
+/* Contenido */
+    main{
+        display: grid;
+        padding: 1rem;  
+        gap: .5rem;
+        margin: auto;
+    }
+    aside{
+        grid-row: 1;
+        overflow: auto;
+        max-height: 200px;
+    }
+/* Ejemplos */
+    .example{
+        display: flex;
+        flex-wrap: wrap;
+        margin: 1rem auto;
+        border-left: .25rem solid #012;
+        padding: 1rem;
+        line-height: 1.5;
+        background-color: #eee;
+        box-shadow: -.5rem .5rem .5rem #999;
+    }
+    .example strong{
+        text-transform: uppercase;
+    }
+    .example li{
+        width: 100%;
+    }
+
+/* Tabla de Contenidos */
+    /* Declaracion */
+    .content-table{
+        counter-reset: uno;
+        padding: .5rem;
+        padding-left: 4rem;
+        font-weight: bold;
+    }
+    .content-table ol{
+        counter-reset: dos;
+    }
+    .content-table ol ol{
+        counter-reset: tres;
+    }
+    /* Incrementos */
+    .content-table li{
+        counter-increment: uno;
+        color: #124;
+    }
+    .content-table li li{
+        counter-increment: dos;
+        color: #248;
+    }
+    .content-table li li li{
+        counter-increment: tres;
+        color: #36c;
+    }
+    /* Aplicacion */
+    .content-table li::marker{
+        content: 
+            counter(uno) '.'
+            counter(dos) '.'
+            counter(tres) ' - '
+    }
+
+/* Pseudoelemento: parte o elemento que se encuentra dentro de una etiqueta */
+    main{
+        counter-reset: capitulo;
+    }
+    section{
+        counter-reset: tema;
+    }
+    section h2::before{
+        content: 'Capitulo ' counter(capitulo) ': ';
+        counter-increment: capitulo;
+        text-shadow: 0 0 .5rem #fc6;
+    }
+    section h3::before{
+        content: 'Tema ' counter(tema) ': ';
+        counter-increment: tema;
+    }
+    article > p::first-letter {
+        float: left;
+        margin-right: .5rem;
+        font-size: 3rem;
+    }
+    article > p::first-line{
+        color: #124;
+        font-weight: bold;
+    }
+/* Tarjetas de presentacion */
+    .card{
+        border-radius: .5rem;
+        padding: 1.5rem 1rem;
+        box-shadow: 0 0 .5rem #ccc;
+        overflow: hidden;
+    }
+    .card .header{
+        display: block;
+        margin: -1.5rem -1rem 1rem; /*top right bottom left*/
+    }
+/* Modelos de color */
+    [class*="color"]{
+        color: #ccc;
+        border: 2px dashed;
+        padding: .5rem 1rem;
+    }
+    .color-html{
+        background-color: darkslateblue; /* 140 colores */
+    }
+    .color-rgb{
+        background-color: rgb(68, 68, 136); /* rojo verde azul */
+    }
+    .color-hex{
+        background-color: #448; /* 16.777.216 combinaciones */
+    }
+    .color-hsl{
+        background-color: hsl(250, 45%, 40%);
+    }
+/* Flexbox: Modelo de Cajas Flexible */
+    .flex{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem .5rem;
+        padding: .5rem;
+    }
+    .flex > *{
+        flex: 1 0 min(100%,300px);
+    /* 
+        flex-grow: El elemento debe aumentar su tamaño para ocupar el espacio ;
+        flex-shrink: El elemento debe reducir su tamaño para encajar;
+        flex-basis: Tamaño base del elemento para definir su ancho 
+    */
+    }
+/* CSS-Grid: Sistema de Grillas */
+    .grid{
+        display: grid;
+        gap: .5rem;
+    }
+    .columns-2{
+        grid-template-columns: repeat(2, auto);
+    }
+    .columns-3{
+        grid-template-columns: repeat(3, auto);
+    }   
+    .columns-4{
+        grid-template-columns: repeat(4, auto);
+    }
+    .box :is(div, span){
+        padding: .5rem;
+        color: #eee;
+        background-color: #c36;
+    }
+    .box :first-child{
+        grid-column: span 3;
+    }
+    .box :last-child{
+        grid-column: 2 / 4;
+    }
+    .box span:first-of-type{
+        grid-row: 3 / 6;
+    }
+    .box div:last-of-type{
+        grid-row: span 3;
+    }
+    /* grid-areas */
+    .layout{
+        grid-template-areas: 
+            'nav    header  header  header'
+            'nav    main    main    aside'
+            'nav    article .       aside'
+            'nav    article .       aside'
+            'nav    footer  footer  footer'
+    }
+    .layout div:first-child{
+        grid-area: header;
+    }
+    .layout div:nth-child(2){
+        grid-area: nav;
+    }
+    .layout div:nth-child(3){
+        grid-area: main;
+    }
+    .layout div:nth-last-child(3){
+        grid-area: article;
+    }
+    .layout div:nth-last-child(2){
+        grid-area: aside;
+    }
+    .layout div:last-child{
+        grid-area: footer;
+    }
+
+/* Ejemplos de Layout */
+    /* Ejemplo con Flexbox */
+    .flexbox{
+        display: flex;
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+    .justify-between{
+        justify-content: space-between;
+    }
+    .jutify-around{
+        justify-content: space-around;
+    }
+    .justify-evenly{
+        justify-content: space-evenly;
+    }
+    /* Ejemplo con CSS-grid */
+    .gallery{
+        grid-template-columns: repeat(auto-fit, minmax(min(100%,300px),1fr));
+        /* EXPLICACION:
+            repeat(cantidad, tamaño)
+                * auto-fill: rellena el espacio con las celdas que puedan entrar
+                * auto-fit: estira las celdas que entran para cubrir el contenedor
+            minmax(minimo, maximo)
+        */
+    }
+    .gallery img{
+        border-radius: .25rem;
+        border: .5rem solid #ccc;
+    }
+    .masonry :nth-child(odd){
+        grid-row: span 2;
+    }
+    .masonry :nth-child(even){
+        grid-column: span 2;
+    }
+    /* Clases de Utilidad */
+    .col-1{
+        width: 30%;
+    }
+    .col-2{
+        width: 60%
+    }
+    .col-3{
+        width: 90%;
+    }
+    .w-50{
+        width: calc(50% - .25rem);
+    }
+    .w-100{
+        width: 100%;
+    }
+    .h-100{
+        height: 100%;
+    }
+    .min-h200{
+        min-height: 200px;
+    }
+    .max-h200{
+        max-height: 200px;
+    }
+    .min-300{
+        min-width: min(100%, 300px);
+    }
+    .max-300{
+        max-width: 300px;
+    }
+    .fit-cover{
+        object-fit: cover;
+    }
+    .fit-contain{
+        object-fit: contain;
+    }
+    .float-left{
+        float: left;
+        margin-right: .5rem;
+    }
+    .float-right{
+        float: right;
+        margin-left: .5rem;
+    }
+    .title{
+        font-size: 2rem;
+        display: block;
+    }
+/* Pie de pagina */
+#footer{
+    position: relative;
+    padding: 1rem;
+    background-image: linear-gradient(
+        rgba(17,17,34),
+        rgba(17, 34, 68, .5), 
+        rgba(17,17,34)
+    );
+}
+.cover{
+    position: absolute;
+    /* el elemento utiliza como referente al primer ancestro cuya posicion no sea "static" y permanece fuera del flow */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+    /* Formulario de Contacto */
+    #contact{
+        max-width: 540px;
+        margin: 1rem auto;
+        border-radius: .25rem;
+        padding: 3rem 1.5rem;
+        display: grid;
+        color:#eee;
+        background:
+            rgba(17, 34, 68, .5) 
+            url('../assets/bg/space.jpg')
+            center/cover;
+        opacity: .9;
+    }
+    label{
+        max-height: 0;
+        overflow: hidden;
+        margin: .5rem 0 .2rem;
+    }
+    input,
+    textarea,
+    select,
+    button{
+        outline: none;
+        border: 1px solid;
+        padding: .25rem .5rem;
+        font-size: 1rem;
+    }
+    textarea{
+        resize: none;
+        min-height: 5rem;
+    }
+    .valid{
+        display: none;
+        padding: .5rem;
+        background-image: linear-gradient(#012, transparent);
+    }
+    /* Validacion */
+    form :focus{
+        box-shadow: 0 0 .5rem #eee;
+    }
+    form :focus + .valid{
+        display: block;
+    }
+    form :is(
+        input,
+        textarea
+    ):valid{
+        border-color: #3c6;
+    }
+    form :valid + .valid{
+        color: #3c6;
+    }
+    form :is(
+        input, 
+        textarea
+    ):invalid:not(:placeholder-shown){
+        border-color: #e33;
+    }
+    form :invalid:not(:placeholder-shown) + .valid{
+        color: #e33;
+    }
+    .btn{
+        position: relative;
+        margin: .25rem 0 .5rem auto;
+        border-radius: .25rem;
+        padding: .5rem 1rem;
+        color: #eee;
+        background-color: transparent;
+        text-transform: uppercase;
+    }
+    .btn:hover{
+        color:#012;
+        text-shadow: 0 0 .5rem #012;
+        background-color: #eee;
+    }
+    #contact .btn:hover{
+        left: .25rem;
+        top: .25rem;
+        box-shadow: 
+            -.25rem -.25rem  #ccc;
+    }
+    /* Redes sociales */
+    .social{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap-reverse;
+        gap: .5rem;
+    }
+    .social a{
+        position: relative;
+        /* El elemento de ubica con respecto a si mismo (es su propio referente) y sigue ocupando su lugar dentro del flow*/
+        width: 4rem;
+        height: 4rem;
+        border-radius: .5rem;
+        background-color: #ccc;
+        background-size: 2.5rem;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .social a:hover{
+        bottom: .5rem;
+        background-color: #eee;
+        background-size: 3rem;
+        box-shadow: 0 .25rem .5rem #333;
+        /* x y blur color */
+    }
+    a.fixed-bottom{
+        position: fixed;
+        /* el elemento utiliza como referente al viewport y permanece fuera del flow (el tamaño depende de su contenido) */
+        right: 1rem;
+        bottom: 1rem;
+        opacity: .5;
+    }
+    /* Iconos redes sociales */
+    .facebook{
+        background-image: url('../assets/icon/facebook.svg');
+    }
+    .instagram{
+        background-image: url('../assets/icon/instagram.svg');
+    }
+    .whatsapp{
+        background-image: url('../assets/icon/whatsapp.svg');
+    }
+    .linkedin{
+        background-image: url('../assets/icon/linkedin.svg');
+    }
+    .twitter{
+        background-image: url('../assets/icon/twitter.svg');
+    }
+    .youtube{
+        background-image: url('../assets/icon/youtube.svg');
+    }
+    .github{
+        background-image: url('../assets/icon/github.svg');
+    }
+/* Small Devices - Smartphones */
+@media screen and (min-width: 576px){
+    #header{
+        min-height: min(100vh, 640px);
+        display: grid;
+        align-content: center;
+        padding: 1rem;
+    }
+}
+/* Medium Devices - Tablets */
+@media screen and (min-width: 768px) {
+    nav .btn{
+        display: none;
+    }
+    .menu{
+        max-height: 640px;
+        width: auto;
+        display: flex;
+        gap: .5rem;
+    }
+    section > .header{
+        top: 2rem;
+    }
+    main{
+        max-width: 720px;
+    }
+    label{
+        max-height: 2rem;
+    }
+}
+/* Large Devices - Laptops */
+@media screen and (min-width: 992px){
+    main{
+        max-width: 1320px;
+        grid-template-columns: 1fr 3fr;
+    }
+    aside{
+        position: sticky;
+        top: 2rem;
+        max-height: calc(100vh - 2rem);
+    }
+    section{
+        grid-column: 2;
+    }
+}
+/* Large Devices - Desktop */
+@media screen and (min-width: 1200px){
+    #contact{
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            'Heading    Heading'
+            'lblName    lblPhone'
+            'cmdName    cmdPhone'
+            'vldName    vldPhone'
+            'lblEmail   lblEmail'
+            'cmdEmail   cmdEmail'
+            'vldEmail   vldEmail'
+            'lblText    lblText'
+            'cmdText    cmdText'
+            '.          button';
+        gap: 0 .5rem;
+    }
+    /* Textos de Sugerencia */
+        label[for="contact_name"]{
+            grid-area: lblName;
+        }
+        label[for="contact_email"]{
+            grid-area: lblEmail;
+        }
+        label[for="contact_phone"]{
+            grid-area: lblPhone;
+        }
+        label[for="contact_consult"]{
+            grid-area: lblText;
+        }
+    /* Campos de Formulario */
+        #contact_name{
+            grid-area: cmdName;
+        }
+        #contact_email{
+            grid-area: cmdEmail;
+        }
+        #contact_phone{
+            grid-area: cmdPhone;
+        }
+        #contact_consult{
+            grid-area: cmdText;
+        }
+    /* Validacion */
+        #contact_name + .valid{
+            grid-area: vldName;
+        }
+        #contact_email + .valid{
+            grid-area: vldEmail;
+        }
+        #contact_phone + .valid{
+            grid-area: vldPhone;
+        }
+    #contact .btn{
+        grid-area: button;
+    }
+}
+/* Extra Extra Large - HD Desktop */
+@media screen and (min-width: 1400px){
+    nav{
+        padding: 1rem calc(50vw - 660px);
+    }
+}
+/* Modo predefinido por el usuario */
+@media screen and (prefers-color-scheme: light){
+    .example{
+        color: #333;
+        background-color: #eee;
+    }
+}
+@media screen and (prefers-color-scheme: dark){
+    .example{
+        color: #eee;
+        background-color: #333;
+    }
+}
+
+/* Diseño de Impresion */
+@media print {
+    #header,
+    nav,
+    aside,
+    #footer{
+        display: none;
+    }
+    .header{
+        page-break-before: always;
+    }
+}
